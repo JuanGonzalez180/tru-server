@@ -1,14 +1,11 @@
 import * as nodemailer from 'nodemailer';
+import * as nodemailerSendgrid from 'nodemailer-sendgrid';
 import dotenv from "dotenv";
 export const sendContact = async (name, email = '', message = '') => {
     dotenv.config();
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.NODEMAILER_USER,
-            pass: process.env.NODEMAILER_PASS,
-        }
-    });
+    const transporter = nodemailer.createTransport(nodemailerSendgrid.default({
+        apiKey: process.env.SENDGRID_API_KEY
+    }));
     // send mail with defined transport object
     let result;
     try {
@@ -25,9 +22,11 @@ export const sendContact = async (name, email = '', message = '') => {
                     <br><br>
                 `,
         });
+        result.error = false;
     }
     catch (error) {
         result = error;
+        result.error = true;
     }
     return result;
 };

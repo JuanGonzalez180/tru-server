@@ -12,7 +12,7 @@ export const register = (app) => {
             return respJson.responseType(response, 'Debes suministrar un mensaje');
         contact.sendContact(name, email, message)
             .then(result => {
-            if (result && result.accepted)
+            if (result && !result.error)
                 respJson.responseType(response, 'Se ha enviado el formulario correctamente', 200);
             else
                 respJson.responseType(response, 'No se ha podido enviar el correo electrónico', 500, result);
