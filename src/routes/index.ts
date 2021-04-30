@@ -19,7 +19,7 @@ export const register = ( app: express.Application ) => {
                 if( result && result.accepted )
                     respJson.responseType( response, 'Se ha enviado el formulario correctamente', 200 )
                 else
-                    respJson.responseType( response, 'No se ha podido enviar el correo electrónico' )
+                    respJson.responseType( response, 'No se ha podido enviar el correo electrónico', 500, result )
             });
     })
 
